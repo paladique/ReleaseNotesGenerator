@@ -1,4 +1,4 @@
-//Create a new C# QueueTrigger, replace with original code
+//Create a new C# QueueTrigger, replace with original code, upload project.json (in this repo)
 
 #r "Microsoft.WindowsAzure.Storage"
 using System;

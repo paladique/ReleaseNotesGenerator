@@ -1,6 +1,19 @@
 {
-    "bindings": [
-    
-    ],
-    "disabled": false
-  }
+  "bindings": [
+    {
+      "name": "myQueueItem",
+      "type": "queueTrigger",
+      "direction": "in",
+      "queueName": "release-queue",
+      "connection": "StorageConnection"
+    },
+    {
+      "name": "blobContainer",
+      "type": "blob",
+      "direction": "inout",
+      "path": "releases/*",
+      "connection": "StorageConnection"
+    }
+  ],
+  "disabled": false
+}

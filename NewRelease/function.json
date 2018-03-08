@@ -1,19 +1,18 @@
 {
-    "bindings": [
-      {
-        "name": "myQueueItem",
-        "type": "queueTrigger",
-        "direction": "in",
-        "queueName": "release-queue",
-        "connection": "StorageConnection"
-      },
-      {
-        "name": "blobContainer",
-        "type": "blob",
-        "direction": "inout",
-        "path": "releases/*",
-        "connection": "StorageConnection"
-      }
-    ],
-    "disabled": false
-  }
+  "bindings": [
+    {
+      "type": "httpTrigger",
+      "direction": "in",
+      "webHookType": "github",
+      "name": "req"
+    },
+    {
+      "type": "queue",
+      "name": "releaseQueueItem",
+      "queueName": "release-queue",
+      "connection": "StorageConnection",
+      "direction": "out"
+    }
+  ],
+  "disabled": false
+}

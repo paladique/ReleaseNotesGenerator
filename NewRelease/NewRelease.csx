@@ -7,11 +7,10 @@ public static async Task<HttpResponseMessage> Run(HttpRequestMessage req, IColle
 
     // Extract github comment from request body
     string releaseBody = data?.release?.body;
-    string releaseName = data?.release?.name;
+    string releaseName = data?.release?.name;    
+    string repositoryName = data?.repository?.full_name;
 
-    var releaseDetails = String.Format("{0},{1}", releaseName, releaseBody);
-
+    //Format message and send to queue
+    var releaseDetails = string.Format("{0}|{1}|{2}", releaseName, releaseBody, repositoryName);
     releaseQueueItem.Add(releaseDetails);    
- 
-    return req.CreateResponse(HttpStatusCode.OK, "Works!");
 }

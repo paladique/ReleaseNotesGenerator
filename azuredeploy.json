@@ -5,7 +5,10 @@
     "siteName":{
       "type":"string"
     },
-    "storageAccountName":{
+    "storageAccountConnectionString":{
+      "type":"string"
+    },
+    "gitHubAppName":{
       "type":"string"
     },
     "siteLocation":{
@@ -23,9 +26,6 @@
   "variables": {
     "siteStorageAccountName": "[toLower(parameters('siteName'))]",
     "storageAccountid": "[concat(resourceGroup().id,'/providers/','Microsoft.Storage/storageAccounts/', variables('siteStorageAccountName'))]",
-    "customStorageAccountName": "[toLower(parameters('storageAccountName'))]",
-    "customStorageAccountid": "[concat(resourceGroup().id,'/providers/','Microsoft.Storage/storageAccounts/', variables('customStorageAccountName'))]"
-
   },
   "resources":[
     {
@@ -33,16 +33,6 @@
       "name": "[variables('siteStorageAccountName')]",
       "apiVersion": "2015-05-01-preview",
       "location": "[parameters('siteLocation')]",
-      "properties": {
-        "accountType": "Standard_LRS"
-      }
-    },
-    {
-      "type": "Microsoft.Storage/storageAccounts",
-      "name": "[variables('customStorageAccountName')]",
-      "apiVersion": "2017-10-01",
-      "location": "[parameters('siteLocation')]",
-      "kind": "StorageV2",
       "properties": {
         "accountType": "Standard_LRS"
       }
@@ -81,7 +71,11 @@
               },
               {
                   "name": "StorageConnection",
-                  "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('customStorageAccountName'), ';AccountKey=', listKeys(variables('customStorageAccountid'),'2015-05-01-preview').key1)]"
+                  "value": "variables('storageAccountConnectionString')"
+              },
+              {
+                "name": "ReleaseNotesApp",
+                "value": "variables('gitHubAppName')"
               }
           ]
         }

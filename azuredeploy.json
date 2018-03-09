@@ -43,8 +43,9 @@
       "apiVersion": "2017-10-01",
       "location": "[parameters('siteLocation')]",
       "kind": "StorageV2",
-      "Sku": "Standard_LRS"
-      
+      "properties": {
+        "accountType": "Standard_LRS"
+      }
     },
     {
       "apiVersion":"2016-03-01",

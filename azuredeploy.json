@@ -25,7 +25,7 @@
   },
   "variables": {
     "siteStorageAccountName": "[toLower(parameters('siteName'))]",
-    "storageAccountid": "[concat(resourceGroup().id,'/providers/','Microsoft.Storage/storageAccounts/', variables('siteStorageAccountName'))]",
+    "storageAccountid": "[concat(resourceGroup().id,'/providers/','Microsoft.Storage/storageAccounts/', variables('siteStorageAccountName'))]"
   },
   "resources":[
     {

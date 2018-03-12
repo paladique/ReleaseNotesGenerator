@@ -1,14 +1,5 @@
-# release-notes-generator
+# Release Notes Generator
 Azure Function Webhook that generates release notes
 
-Add to queue trigger's function.json:
+[![Deploy to Azure](https://azuredeploy.net/deploybutton.png)](https://azuredeploy.net/?repository=https://github.com/paladique/ReleaseNotesGenerator)
 
-```
-    {
-      "name": "blobContainer",
-      "type": "blob",
-      "direction": "inout",
-      "path": "container-name/*",
-      "connection": "blobConnectionName"
-    }
-```

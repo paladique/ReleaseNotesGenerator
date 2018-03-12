@@ -71,11 +71,11 @@
               },
               {
                   "name": "StorageConnection",
-                  "value": "variables('storageAccountConnectionString')"
+                  "value": "[toLower(parameters('storageAccountConnectionString'))]"
               },
               {
                 "name": "ReleaseNotesApp",
-                "value": "variables('gitHubAppName')"
+                "value": "[toLower(parameters('gitHubAppName'))]"
               }
           ]
         }

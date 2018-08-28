@@ -11,32 +11,44 @@ public static async Task Run(HttpRequestMessage req, TraceWriter log)
     // Get request body
     dynamic data = await req.Content.ReadAsAsync<object>();
 
-    // Extract github comment from request body
+    // Extract github release from request body
     string releaseBody = data?.release?.body;
     string releaseName = data?.release?.name;
+    string repositoryName = data?.repository?.full_name;
 
-    CloudStorageAccount storageAccount = CloudStorageAccount.Parse(Environment.GetEnvironmentVariable("jgblob"));
+    CloudStorageAccount storageAccount = CloudStorageAccount.Parse(Environment.GetEnvironmentVariable("blob"));
     var blobClient = storageAccount.CreateCloudBlobClient();
     var container = blobClient.GetContainerReference("releases");
     var blob = container.GetBlockBlobReference(releaseName + ".md" );
 
-    string txtIssues = await GetReleaseDetails(IssueTypeQualifier.Issue);
-    string txtPulls = await GetReleaseDetails(IssueTypeQualifier.PullRequest);
+    string txtIssues = await GetReleaseDetails(IssueTypeQualifier.Issue, repositoryName);
+    string txtPulls = await GetReleaseDetails(IssueTypeQualifier.PullRequest, repositoryName);
     
-    var stuff =  String.Format("# {0} \n {1} \n\n" + "# Issues Closed:" + txtIssues + "\n\n# Changes Merged:" + txtPulls, releaseName, releaseBody);
+    var text = String.Format("# {0} \n {1} \n\n" + "# Issues Closed:" + txtIssues + "\n\n# Changes Merged:" + txtPulls, releaseName, releaseBody);
 
-    await blob.UploadTextAsync(stuff);    
+    await blob.UploadTextAsync(text);    
 }
 
-public static async Task<string> GetReleaseDetails(IssueTypeQualifier type)
+public static async Task<string> GetReleaseDetails(IssueTypeQualifier type, string repoName)
 {
+    //Connect to client with OAuth App
     var github = new GitHubClient(new ProductHeaderValue(Environment.GetEnvironmentVariable("ReleaseNotes")));
     var twoWeeks = DateTime.Now.Subtract(TimeSpan.FromDays(14));
+    var range = new DateRange(twoWeeks, SearchQualifierOperator.GreaterThanOrEqualTo);
     var request = new SearchIssuesRequest();
 
-    request.Repos.Add(Environment.GetEnvironmentVariable("Repo"));
+    request.Repos.Add(repoName);
     request.Type = type;
-    request.Created = new DateRange(twoWeeks, SearchQualifierOperator.GreaterThan);
+
+    //Find Issues or PRs closed or merged within the past 14 days in specified Repo
+    if (type == IssueTypeQualifier.Issue)
+    {
+        request.Closed = range;
+    }
+    else
+    {
+        request.Merged = range;
+    }
 
     var issues = await github.Search.SearchIssues(request);
 

@@ -5,13 +5,6 @@
       "direction": "in",
       "webHookType": "github",
       "name": "req"
-    },
-    {
-      "type": "queue",
-      "name": "releaseQueueItem",
-      "queueName": "release-queue",
-      "connection": "StorageConnection",
-      "direction": "out"
     }
   ],
   "disabled": false

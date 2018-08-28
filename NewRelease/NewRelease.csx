@@ -5,7 +5,6 @@ using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Blob;
 
-
 public static async Task Run(HttpRequestMessage req, TraceWriter log)
 {
     // Get request body
@@ -52,6 +51,7 @@ public static async Task<string> GetReleaseDetails(IssueTypeQualifier type, stri
 
     var issues = await github.Search.SearchIssues(request);
 
+    //Iterate and format text 
     string searchResults = string.Empty;
     foreach(Issue x in issues.Items)
     {

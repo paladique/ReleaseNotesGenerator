@@ -70,11 +70,11 @@
                   "value": "~1"
               },
               {
-                  "name": "StorageConnection",
+                  "name": "StorageAccountConnectionString",
                   "value": "[toLower(parameters('storageAccountConnectionString'))]"
               },
               {
-                "name": "ReleaseNotesApp",
+                "name": "ReleaseNotes",
                 "value": "[toLower(parameters('gitHubAppName'))]"
               }
           ]

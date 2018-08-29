@@ -15,7 +15,7 @@ public static async Task Run(HttpRequestMessage req, TraceWriter log)
     string releaseName = data?.release?.name;
     string repositoryName = data?.repository?.full_name;
 
-    CloudStorageAccount storageAccount = CloudStorageAccount.Parse(Environment.GetEnvironmentVariable("blob"));
+    CloudStorageAccount storageAccount = CloudStorageAccount.Parse(Environment.GetEnvironmentVariable("StorageAccountConnectionString"));
     var blobClient = storageAccount.CreateCloudBlobClient();
     var container = blobClient.GetContainerReference("releases");
     var blob = container.GetBlockBlobReference(releaseName + ".md" );

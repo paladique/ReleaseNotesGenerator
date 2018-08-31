@@ -77,7 +77,8 @@ public static async Task<string> GetReleaseDetails(IssueTypeQualifier type, stri
 }
 ```
 
-1. In your new function, copy the url by clicking click **</> Get function URL**, and save for later. Repeat for **</> Get GitHub secret**. You will use these values to configure the webhook in GitHub.
+5. Replace contents of (or upload) `project.json` with this projects' project.json
+6. In your new function, copy the url by clicking click **</> Get function URL**, and save for later. Repeat for **</> Get GitHub secret**. You will use these values to configure the webhook in GitHub.
 
 ### Configure GitHub Webhook
 1. Navigate to GitHub and select the repository to use with webhook. Navgiate to the repository's settings.
